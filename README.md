@@ -1,2 +1,2 @@
 # formbuilderai
-![image-01.png](image-01.png)
+![image-01.png](images/image-01.png)
