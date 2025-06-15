@@ -1260,3 +1260,170 @@ Notes:
 
 - **`minimizeImageUrl`**: Reduces image file size
 - **`cleanup`**: Removes input files after generation
+
+
+
+# FormBuilderAI.js Documentation
+
+## 1. Installation
+
+**Option 1: NPM Import**
+
+```jsx
+import FormBuilderAI from '@innovastudio/formbuilderai';
+import '@innovastudio/formbuilderai/public/formbuilderai/formbuilderai.css';
+```
+
+**Option 2: CDN/Script Tag**
+
+```jsx
+<link href="formbuilderai/formbuilderai.css" rel="stylesheet">
+<script src="formbuilderai/formbuilderai.min.js"></script>
+```
+
+## **2. Initialization**
+
+```jsx
+const builder = new FormBuilderAI({
+	builderSelector: '.form-editor',    // Container for form builder
+	previewSelector: '.form-preview',   // Container for live preview
+	settingsSelector: '.form-settings', // Container for form settings
+	designerSelector: '.form-designer', // Container for form designer
+	workflowSelector: '.form-workflow', // Container for workflow panel
+	resultSelector: '.workflow-result', // Container for workflow results
+	
+	// Templates
+	
+	templatesSelector: '.form-templates', // Container for templates
+	assetsFolder: '/formfiles/',        // Path to template assets
+	templatesUrl: '/templates.json',    // URL to templates JSON
+	templateFilters: ['all', 'image', 'video', 'audio', 'text'],  // Template filters
+	
+	// Text Generation
+	defaultMediaGenerationProvider: 'openai', // Provider for text generation
+	model: 'openai/gpt-4o-mini',            // Model for content generation
+	model2: 'openai/gpt-4o-mini',           // Model for processing (function calling)
+	sendCommandUrl: '[/openrouter](http://localhost:8083/openrouter)', // Node.js endpoint
+	sendCommandStreamUrl: '[/openrouter_stream](http://localhost:8083/openrouter_stream)',
+	
+	// Media Generation
+	
+	// Feature Toggles:
+	imageToggle: true,
+	videoToggle: true,
+	audioToggle: true,
+	
+	// Upload Endpoints (3 options): Local Server, Fal Storage, or S3 Storage
+	uploadMediaUrl_Fal: 'http://localhost:8083/uploadfile-fal',
+	uploadBase64Url_Fal: 'http://localhost:8083/uploadbase64-fal',
+	
+	// Fal Integration Endpoints:
+	generateMediaUrl_Fal: '/request-fal', // request generation
+	checkRequestStatusUrl_Fal: '/status-fal', // check generation status
+	getResultUrl_Fal: '/result-fal', // receive result
+	
+	// Optimization & Cleanup Endpoints:
+	minimizeImageUrl: '/minimizer', // minimize image file size
+	cleanup: '/cleanup', // cleanup input files
+	
+}).on('templateSelect', (template) => {
+
+    console.log(template);
+
+    // Load/render form
+    const formData = JSON.stringify(template.form);
+    builder.load(formData);
+
+    // Load workflow
+    const workflowData = JSON.stringify(template.workflow);
+    builder.loadWorkflow(workflowData);
+
+    localStorage.setItem('myform', formData); // save form
+    localStorage.setItem('myworkflow', workflowData); // save workflow
+
+}).on('change', (formData) => {
+
+    console.log(JSON.parse(formData));
+
+    localStorage.setItem('myform', formData); // save form
+
+}).on('workflowChange', (workflowData) => {
+
+    console.log(JSON.parse(workflowData));
+
+    localStorage.setItem('myworkflow', workflowData); // save workflow
+
+}).on('themeChange', (themeData) => {
+
+    // console.log(JSON.parse(themeData));
+    
+    localStorage.setItem('mytheme', themeData); // save theme
+
+}).on('resultReady', ({ previewText, markdown, html, media }) => {
+
+    console.log('Result generated:', { previewText, markdown, html, media });
+
+    // Save or display the result
+    
+});
+```
+
+## **3. Configuration Parameters**
+
+| **`builderSelector`** | **CSS selector for the form builder container.** |
+| --- | --- |
+| **`previewSelector`** | **CSS selector for the live preview container.** |
+| **`settingsSelector`** | **CSS selector for the form settings panel.** |
+| **`designerSelector`** | **CSS selector for the form designer (styling) panel.** |
+| **`workflowSelector`** | **CSS selector for the workflow configuration panel.** |
+| **`resultSelector`** | **CSS selector for displaying workflow results.** |
+| **`templatesSelector`** | **CSS selector for displaying templates.** |
+| **`assetsFolder`** | **Path to template assets.** |
+| **`templatesUrl`** | **URL to templates JSON.** |
+| **`templateFilters`** | **Template filters.
+Default:  `['all', 'image', 'video', 'audio', 'text']`.** |
+| **`templatesConfig`** | **Template configuration. 
+Default: `{ fal: true }`.
+If set to  `{ fal: false }`, all media generation templates that use Fal will not be displayed.** |
+| **`defaultMediaGenerationProvider`** | **Provider for text generation (`'openai'` , `'openrouter'` ). Default: `'openai'`** |
+| **`model`** | **AI model for content generation (e.g.,`'openai/gpt-4o-mini'`).** |
+| **`model2`** | **Secondary AI model for function calls.** |
+| **`sendCommandUrl`** | **Endpoint for AI command processing (required).** |
+| **`sendCommandStreamUrl`** | **Endpoint for streaming AI responses (optional).** |
+| **`imageToggle`** | **Show/hide image generation button.** |
+| **`videoToggle`** | **Show/hide video generation button.** |
+| **`audioToggle`** | **Show/hide audio generation button.** |
+| **`uploadMediaUrl_Fal`** | **Endpoint for file upload.** |
+| **`uploadBase64Url_Fal`** | **Endpoint for base64 image upload.** |
+| **`generateMediaUrl_Fal`** | **Endpoint for generation requests.** |
+| **`checkRequestStatusUrl_Fal`** | **Endpoint for checking generation status.** |
+| **`getResultUrl_Fal`** | **Endpoint for receiving generation result.** |
+| **`minimizeImageUrl`** | **Endpoint for minimizing image file size.** |
+| **`cleanup`** | **Endpoint for cleaning up input files.** |
+| **`alwaysVisibleSubmit`** | **Makes the submit button always visible (floating). Default: true.** |
+| **`saveResults`** | **Displays the latest generated result (saved in localStorage). Default: false.** |
+| **`exampleImageUrl`** | **Path to the example image file.** |
+| **`exampleVideoUrl`** | **Path to the example video file.** |
+| **`exampleAudioUrl`** | **Path to the example audio file.** |
+| **`disableMediaGeneration`** | **Disables media generation. Default: false.** |
+| **`headers`** | **Custom headers for each server (API) request. Default: `{}`.** |
+| **`customData`** | **Custom data for each server (API) request. Default: `{}`.
+Example:
+`{ user_id: 3, form_id: 5, other: 'value' }`.** |
+
+## **4. Methods**
+
+| **`load(formData)`** | **Load form data (JSON string) into the builder.** |
+| --- | --- |
+| **`setTheme(themeData)`** | **Apply a saved theme to the form.** |
+| **`loadWorkflow(data)`** | **Load workflow configuration (JSON string).** |
+| **`loadTemplates()`** | **Load and display form templates.** |
+
+## **5. Events**
+
+| **`change`** | **Triggered when the form structure is modified (e.g., adding/removing fields). The event returns a JSON string (formData) representing the updated form. Use this to autosave or preview changes.** |
+| --- | --- |
+| **`themeChange`** | **Triggered when form styling is updated via the designer panel. Returns a JSON string (themeData) containing the new theme settings, such as colors, borders, etc.** |
+| **`workflowChange`** | **Triggered when workflow configuration changes. Returns a JSON string (workflowData) with the updated steps.** |
+| **`resultReady`** | **Triggered when workflow processing completes. Returns an object with generated content, such as text (previewText), markdown (markdown), HTML (html), or media URLs (media).** |
+| **`templateSelect`** | **Triggered when a user selects a template from the templates panel. Returns the selected template’s data (e.g., its form and workflow configurations).** |
