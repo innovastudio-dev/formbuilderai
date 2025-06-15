@@ -1372,6 +1372,7 @@ const builder = new FormBuilderAI({
 ## **3. Configuration Parameters**
 
 | **`builderSelector`** | **CSS selector for the form builder container.** |
+| --- | --- |
 | **`previewSelector`** | **CSS selector for the live preview container.** |
 | **`settingsSelector`** | **CSS selector for the form settings panel.** |
 | **`designerSelector`** | **CSS selector for the form designer (styling) panel.** |
@@ -1414,6 +1415,7 @@ Example:
 ## **4. Methods**
 
 | **`load(formData)`** | **Load form data (JSON string) into the builder.** |
+| --- | --- |
 | **`setTheme(themeData)`** | **Apply a saved theme to the form.** |
 | **`loadWorkflow(data)`** | **Load workflow configuration (JSON string).** |
 | **`loadTemplates()`** | **Load and display form templates.** |
@@ -1421,6 +1423,7 @@ Example:
 ## **5. Events**
 
 | **`change`** | **Triggered when the form structure is modified (e.g., adding/removing fields). The event returns a JSON string (formData) representing the updated form. Use this to autosave or preview changes.** |
+| --- | --- |
 | **`themeChange`** | **Triggered when form styling is updated via the designer panel. Returns a JSON string (themeData) containing the new theme settings, such as colors, borders, etc.** |
 | **`workflowChange`** | **Triggered when workflow configuration changes. Returns a JSON string (workflowData) with the updated steps.** |
 | **`resultReady`** | **Triggered when workflow processing completes. Returns an object with generated content, such as text (previewText), markdown (markdown), HTML (html), or media URLs (media).** |
