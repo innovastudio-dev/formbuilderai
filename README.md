@@ -1130,8 +1130,8 @@ viewer = new FormViewer(elm, {
 
   model: 'openai/gpt-4o-mini', // for content generation
   model2: 'openai/gpt-4o-mini', // for processing (function calling)
-  sendCommandUrl: 'http://localhost:8082/openrouter', 
-	sendCommandStreamUrl: 'http://localhost:8082/openrouter_stream',
+  sendCommandUrl: '/openrouter', 
+  sendCommandStreamUrl: '/openrouter_stream',
 
   // Media Generation
 
@@ -1303,8 +1303,8 @@ const builder = new FormBuilderAI({
 	defaultMediaGenerationProvider: 'openai', // Provider for text generation
 	model: 'openai/gpt-4o-mini',            // Model for content generation
 	model2: 'openai/gpt-4o-mini',           // Model for processing (function calling)
-	sendCommandUrl: '[/openrouter](http://localhost:8083/openrouter)', // Node.js endpoint
-	sendCommandStreamUrl: '[/openrouter_stream](http://localhost:8083/openrouter_stream)',
+	sendCommandUrl: '/openrouter', // Node.js endpoint
+	sendCommandStreamUrl: '/openrouter_stream',
 	
 	// Media Generation
 	
@@ -1314,8 +1314,8 @@ const builder = new FormBuilderAI({
 	audioToggle: true,
 	
 	// Upload Endpoints (3 options): Local Server, Fal Storage, or S3 Storage
-	uploadMediaUrl_Fal: 'http://localhost:8083/uploadfile-fal',
-	uploadBase64Url_Fal: 'http://localhost:8083/uploadbase64-fal',
+	uploadMediaUrl_Fal: '/uploadfile-fal',
+	uploadBase64Url_Fal: '/uploadbase64-fal',
 	
 	// Fal Integration Endpoints:
 	generateMediaUrl_Fal: '/request-fal', // request generation
